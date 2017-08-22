@@ -44,6 +44,23 @@ enemy.setposition(-200,250)
 
 enemyspeed = 2
 
+#create the bullet
+bullet = turtle.Turtle()
+bullet.color("yellow")
+bullet.shape("square")
+bullet.penup()
+bullet.speed(0)
+bullet.setheading(90)
+bullet.shapesize(.2,.5)
+bullet.hideturtle()
+
+bulletspeed = 20
+
+#define bullet state
+#ready- ready to fire
+#fire- bullert fireing
+bullletstate = "ready"
+
 #move player
 def move_left():
 	x = player.xcor()
@@ -58,12 +75,22 @@ def move_right():
 		x = 280
 	player.setx(x)
 
+def fire_bullet():
+    #Declare bullletstate as a global if it needs changed
+    global bullletstate
+    #move the bullet to the justa above the player
+    x = player.xcor()
+    y = player.ycor() +10
+    bullet.setposition(x,y)
+    bullet.showturtle()
+
 
 
 # keyboard bindings
 turtle.listen()
 turtle.onkey(move_left, 'Left')
 turtle.onkey(move_right, 'Right')
+turtle.onkey(fire_bullet, 'space')
 
 #main game loop
 while True:
@@ -83,6 +110,12 @@ while True:
         y -= 40
         enemyspeed *= -1
         enemy.sety(y)
+    #move the bullet
+    y = bullet.ycor()
+    y += bulletspeed
+    bullet.sety(y)
+
+
 
 
 

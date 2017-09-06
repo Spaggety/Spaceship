@@ -1,4 +1,4 @@
-#PArt 1
+	#PArt 1
 #settting up screen
 #2.7
 import turtle
@@ -59,7 +59,7 @@ bulletspeed = 20
 #define bullet state
 #ready- ready to fire
 #fire- bullert fireing
-bullletstate = "ready"
+bulletstate = "ready"
 
 #move player
 def move_left():
@@ -77,12 +77,14 @@ def move_right():
 
 def fire_bullet():
     #Declare bullletstate as a global if it needs changed
-    global bullletstate
-    #move the bullet to the justa above the player
-    x = player.xcor()
-    y = player.ycor() +10
-    bullet.setposition(x,y)
-    bullet.showturtle()
+    global bulletstate
+    if bulletstate == "ready":
+        bulletstate = "fire"
+        #move the bullet to the justa above the player
+        x = player.xcor()
+        y = player.ycor() +10
+        bullet.setposition(x,y)
+        bullet.showturtle()
 
 
 
@@ -110,10 +112,19 @@ while True:
         y -= 40
         enemyspeed *= -1
         enemy.sety(y)
+
     #move the bullet
-    y = bullet.ycor()
-    y += bulletspeed
-    bullet.sety(y)
+    if bulletstate == "fire":
+        y = bullet.ycor()
+        y += bulletspeed
+        bullet.sety(y)
+
+    #check to see if bullet has gone to the top
+    if bullet.ycor() > 275:
+        bullet.hideturtle()
+        bulletstate = "ready"
+
+
 
 
 
